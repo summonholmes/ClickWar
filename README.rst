@@ -14,7 +14,7 @@ install instructions
 
 ..code:: bash
 
-   py simpleclicker1.py
+  py simpleclicker1.py
 
 Authors
 ~~~~~~~
