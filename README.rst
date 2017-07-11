@@ -23,4 +23,5 @@ Authors
 * **Shane Kimble**
 
 .. _Python3+: https://www.python.org/downloads/
-.. _ehinderer: https://github.com/ehinderer
+.. _Tkinter: http://www.tkdocs.com/tutorial/install.html
+.. _ehinderer:http://www.tkdocs.com/tutorial/install.html https://github.com/ehinderer
