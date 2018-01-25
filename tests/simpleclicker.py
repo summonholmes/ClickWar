@@ -1,3 +1,4 @@
+#!usr/bin/env python3
 # Copied from tutorial on youtube by TigerHawkT3
 import tkinter as tk
 from idlelib.ToolTip import ToolTip as Tip
