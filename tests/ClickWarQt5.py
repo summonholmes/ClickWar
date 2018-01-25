@@ -79,7 +79,6 @@ class Ui_win_Title(object):
     def retranslateUi(self, win_Title):
         clickVal = 500
 
-
         _translate = QtCore.QCoreApplication.translate
         win_Title.setWindowTitle(_translate("win_Title", "ClickWarQt5"))
         self.pushExtinf.setText(_translate("win_Title", "Extra Influence:"))
