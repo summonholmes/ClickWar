@@ -91,10 +91,12 @@ class Ui_win_Title(object):
         QtCore.QMetaObject.connectSlotsByName(win_Title)
 
     def retranslateUi(self, win_Title):
+        clickVal = 500
+
         win_Title.setWindowTitle(_translate("win_Title", "ClickWarQt4", None))
         self.pushExtinf.setText(_translate("win_Title", "Extra Influence:", None))
         self.pushMult.setText(_translate("win_Title", "Influence Multiplier:", None))
-        self.ClickCount.setText(_translate("win_Title", "ClickCount", None))
+        self.ClickCount.setText(_translate("win_Title", "%d" % clickVal, None))
         self.pushAutom.setText(_translate("win_Title", "Vote Automatron:", None))
         self.pushBot.setText(_translate("win_Title", "Vote Bot:", None))
         self.pushDread.setText(_translate("win_Title", "Vote Dreadnought:", None))
