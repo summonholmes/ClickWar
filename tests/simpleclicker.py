@@ -1,6 +1,6 @@
 # Copied from tutorial on youtube by TigerHawkT3
 import tkinter as tk
-from idlelib.tooltip import ToolTip as Tip
+from idlelib.ToolTip import ToolTip as Tip
 
 
 class Gear:
