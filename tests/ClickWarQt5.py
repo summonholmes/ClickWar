@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'ClickWar.ui'
-#
-# Created by: PyQt5 UI code generator 5.7
-#
-# WARNING! All changes made in this file will be lost!
+#!/usr/bin/env python3
 from sys import argv, exit
 from PyQt5 import QtCore, QtGui, QtWidgets
 
