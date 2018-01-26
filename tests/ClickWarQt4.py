@@ -19,7 +19,7 @@ except AttributeError:
 class Ui_win_Title(object):
     def setupUi(self, win_Title):
         win_Title.setObjectName(_fromUtf8("win_Title"))
-        win_Title.resize(419, 419)
+        win_Title.resize(419, 420)
         self.verticalLayout_5 = QtGui.QVBoxLayout(win_Title)
         self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
         self.verticalLayout_4 = QtGui.QVBoxLayout()
@@ -43,12 +43,12 @@ class Ui_win_Title(object):
         self.verticalLayout_4.addLayout(self.horizontalLayout)
         self.verticalLayout_2 = QtGui.QVBoxLayout()
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.pushAutom = QtGui.QPushButton(win_Title)
-        self.pushAutom.setObjectName(_fromUtf8("pushAutom"))
-        self.verticalLayout_2.addWidget(self.pushAutom)
         self.pushBot = QtGui.QPushButton(win_Title)
         self.pushBot.setObjectName(_fromUtf8("pushBot"))
         self.verticalLayout_2.addWidget(self.pushBot)
+        self.pushAutom = QtGui.QPushButton(win_Title)
+        self.pushAutom.setObjectName(_fromUtf8("pushAutom"))
+        self.verticalLayout_2.addWidget(self.pushAutom)
         self.pushDread = QtGui.QPushButton(win_Title)
         self.pushDread.setObjectName(_fromUtf8("pushDread"))
         self.verticalLayout_2.addWidget(self.pushDread)
@@ -117,49 +117,98 @@ class Gear(Ui_win_Title):
         self.limit = limit
 
 class Clicker(Ui_win_Title):
-    def __init__(self):
-    # def __init__(self, parent):
-        # self.parent = parent
+    # def __init__(self):
+    def __init__(self, parent):
+        self.parent = parent
         self.current_clicks = 500
         self.gear = dict()
         self.gear_init()
 
     def gear_init(self):
-        self.gear['influence'] = Gear('influence', 'Extra influence: (%d): 1',
+        self.gear['influence'] = Gear('influence', 'Extra Influence: ',
                                       'Increases number of votes per click.', 10, quantity=1, limit=100)
-        self.gear['bot'] = Gear('bot', 'Vote bot: (%d): 0',
+        self.gear['bot'] = Gear('bot', 'Vote Bot: ',
                                 'Have a bot vote for you; has its own influence.',  15, 0, per_second=1)
-        self.gear['automatron'] = Gear('automatron', 'Vote automatron: (%d): 0',
+        self.gear['automatron'] = Gear('automatron', 'Vote Automatron: ',
                                        'More powerful bots for smashing that vote button.', 50, per_second=5)
-        self.gear['dreadnought'] = Gear('dreadnought', 'Vote dreadnought: (%d): 0',
+        self.gear['dreadnought'] = Gear('dreadnought', 'Vote Dreadnought: ',
                                         'Beastly bot for annihilating that vote button.', 100, per_second=20)
-        self.gear['multiplier'] = Gear('multiplier', 'Influence multiplier: (%d): 0',
+        self.gear['multiplier'] = Gear('multiplier', 'Influence Multiplier: ',
                                        'Doubles influence.', 50, limit=5)
-        self.gear['inclined plane'] = Gear('inclined plane', 'Roll some clicks your way: (%d): 0',
+        self.gear['inclined plane'] = Gear('inclined plane', 'Roll some clicks your way: ',
                                            'Observe clicks in slow motion.',  500, per_second=125)
-        self.gear['pulley'] = Gear('pulley', 'Pull some clicks to you: (%d): 0',
+        self.gear['pulley'] = Gear('pulley', 'Pull some clicks to you: ',
                                    'Not frictionless.', 2000, per_second=750)
-        self.gear['lever'] = Gear('lever', 'Pry some clicks up: (%d): 0',
+        self.gear['lever'] = Gear('lever', 'Pry some clicks up: ',
                                   'Archimedes would be proud.',  10000, per_second=5000)
-        self.gear['wedge'] = Gear('wedge', 'Stuff some extra clicks in there: (%d): 0',
+        self.gear['wedge'] = Gear('wedge', 'Stuff some extra clicks in there: ',
                                   'Can I axe you a question?', 100000, per_second=75000)
-        self.gear['elbow greese'] = Gear('elbow greese', 'Click the old-fashioned way: (%d): 0',
+        self.gear['elbow greese'] = Gear('elbow greese', 'Click the old-fashioned way: ',
                                          'Easy.', 500000, per_second=500000)
         
     def increment(self):
         self.current_clicks += click.gear['influence'].quantity * 2**click.gear['multiplier'].quantity
         ui.ClickCount.setText(_translate("win_Title", "%d" % self.current_clicks, None))
+    
+    def update_extra_inf(self):
+        ui.pushExtinf.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['influence'].description, click.gear['influence'].cost, 
+        click.gear['influence'].quantity), None))
+
+    def update_multi(self):
+        ui.pushMult.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['multiplier'].description, click.gear['multiplier'].cost, 
+        click.gear['multiplier'].quantity), None))
+    
+    def update_bot(self):
+        ui.pushBot.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['bot'].description, click.gear['bot'].cost, 
+        click.gear['bot'].quantity), None))
+    
+    def update_autom(self):
+        ui.pushAutom.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['automatron'].description, click.gear['automatron'].cost, 
+        click.gear['automatron'].quantity), None))
+    
+    def update_dread(self):
+        ui.pushDread.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['dreadnought'].description, click.gear['dreadnought'].cost, 
+        click.gear['dreadnought'].quantity), None))
+    
+    # def update_gear(self):
+    #     for gear in self.gear.values():
+    #         self.current_clicks += gear.per_second * gear.quantity
+    #     self.current_click_label.config(text='%d' % self.current_clicks)
+    #     self.parent.after(1000, self.update)
+    
+    # def purchase(self, name):
+    #     if self.current_clicks >= self.gear[name].cost:
+    #         self.gear[name].quantity += 1
+    #         self.current_clicks -= self.gear[name].cost
+    #         self.current_click_label.config(text='%d' % self.current_clicks)
+    #         self.gear[name].button.config(text=self.gear[name].button['text'].split(':')[0] +
+    #                                       ': ({:.1f}): {}'.format(self.gear[name].cost, self.gear[name].quantity))
+    #         self.gear[name].cost *= 1.1  # 10% cost increase after purchasing (should be a baseline and altered based on power.)
+    #         if self.gear[name].limit and self.gear[name].quantity >= self.gear[name].limit:
+    #             self.gear[name].button.config(state=tk.DISABLED)
+    #             self.gear[name].button.config(text=self.gear[name].button['text'].split(':')[0] +
+    #                                           ': (Limit reached!): {}'.format(self.gear[name].quantity))
 
 if __name__ == "__main__":
     app = QtGui.QApplication(argv)
     win_Title = QtGui.QDialog()
     ui = Ui_win_Title()
     ui.setupUi(win_Title)
-    click = Clicker()
+    click = Clicker(Gear)
 
     # ui.pushVote.clicked.connect(ui.blah) - link function to do thang
     ui.pushQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
     ui.pushVote.clicked.connect(click.increment)
+    ui.pushExtinf.clicked.connect(click.update_extra_inf)
+    ui.pushMult.clicked.connect(click.update_multi)
+    ui.pushAutom.clicked.connect(click.update_autom)
+    ui.pushBot.clicked.connect(click.update_bot)
+    ui.pushDread.clicked.connect(click.update_dread)
     
     win_Title.show()
     exit(app.exec_())

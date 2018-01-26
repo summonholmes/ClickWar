@@ -5,7 +5,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_win_Title(object):
     def setupUi(self, win_Title):
         win_Title.setObjectName("win_Title")
-        win_Title.resize(419, 419)
+        win_Title.resize(419, 420)
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(win_Title)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
@@ -29,12 +29,12 @@ class Ui_win_Title(object):
         self.verticalLayout_4.addLayout(self.horizontalLayout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.pushAutom = QtWidgets.QPushButton(win_Title)
-        self.pushAutom.setObjectName("pushAutom")
-        self.verticalLayout_2.addWidget(self.pushAutom)
         self.pushBot = QtWidgets.QPushButton(win_Title)
         self.pushBot.setObjectName("pushBot")
         self.verticalLayout_2.addWidget(self.pushBot)
+        self.pushAutom = QtWidgets.QPushButton(win_Title)
+        self.pushAutom.setObjectName("pushAutom")
+        self.verticalLayout_2.addWidget(self.pushAutom)
         self.pushDread = QtWidgets.QPushButton(win_Title)
         self.pushDread.setObjectName("pushDread")
         self.verticalLayout_2.addWidget(self.pushDread)
@@ -104,39 +104,69 @@ class Gear(Ui_win_Title):
         self.limit = limit
 
 class Clicker(Ui_win_Title):
-    def __init__(self):
-    # def __init__(self, parent):
-        # self.parent = parent
+    # def __init__(self):
+    def __init__(self, parent):
+        self.parent = parent
         self.current_clicks = 500
         self.gear = dict()
         self.gear_init()
 
     def gear_init(self):
-        self.gear['influence'] = Gear('influence', 'Extra influence: (%d): 1',
+        self.gear['influence'] = Gear('influence', 'Extra influence: ',
                                       'Increases number of votes per click.', 10, quantity=1, limit=100)
-        self.gear['bot'] = Gear('bot', 'Vote bot: (%d): 0',
+        self.gear['bot'] = Gear('bot', 'Vote bot: ',
                                 'Have a bot vote for you; has its own influence.',  15, 0, per_second=1)
-        self.gear['automatron'] = Gear('automatron', 'Vote automatron: (%d): 0',
+        self.gear['automatron'] = Gear('automatron', 'Vote automatron: ',
                                        'More powerful bots for smashing that vote button.', 50, per_second=5)
-        self.gear['dreadnought'] = Gear('dreadnought', 'Vote dreadnought: (%d): 0',
+        self.gear['dreadnought'] = Gear('dreadnought', 'Vote dreadnought: ',
                                         'Beastly bot for annihilating that vote button.', 100, per_second=20)
-        self.gear['multiplier'] = Gear('multiplier', 'Influence multiplier: (%d): 0',
+        self.gear['multiplier'] = Gear('multiplier', 'Influence multiplier: ',
                                        'Doubles influence.', 50, limit=5)
-        self.gear['inclined plane'] = Gear('inclined plane', 'Roll some clicks your way: (%d): 0',
+        self.gear['inclined plane'] = Gear('inclined plane', 'Roll some clicks your way: ',
                                            'Observe clicks in slow motion.',  500, per_second=125)
-        self.gear['pulley'] = Gear('pulley', 'Pull some clicks to you: (%d): 0',
+        self.gear['pulley'] = Gear('pulley', 'Pull some clicks to you: ',
                                    'Not frictionless.', 2000, per_second=750)
-        self.gear['lever'] = Gear('lever', 'Pry some clicks up: (%d): 0',
+        self.gear['lever'] = Gear('lever', 'Pry some clicks up: ',
                                   'Archimedes would be proud.',  10000, per_second=5000)
-        self.gear['wedge'] = Gear('wedge', 'Stuff some extra clicks in there: (%d): 0',
+        self.gear['wedge'] = Gear('wedge', 'Stuff some extra clicks in there: ',
                                   'Can I axe you a question?', 100000, per_second=75000)
-        self.gear['elbow greese'] = Gear('elbow greese', 'Click the old-fashioned way: (%d): 0',
+        self.gear['elbow greese'] = Gear('elbow greese', 'Click the old-fashioned way: ',
                                          'Easy.', 500000, per_second=500000)
 
     def increment(self):
         _translate = QtCore.QCoreApplication.translate
         self.current_clicks += self.gear['influence'].quantity * 2**self.gear['multiplier'].quantity
         ui.ClickCount.setText(_translate("win_Title", "%d" % self.current_clicks))
+    
+    def update_extra_inf(self):
+        _translate = QtCore.QCoreApplication.translate
+        ui.pushExtinf.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['influence'].description, click.gear['influence'].cost, 
+        click.gear['influence'].quantity), None))
+
+    def update_multi(self):
+        _translate = QtCore.QCoreApplication.translate
+        ui.pushMult.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['multiplier'].description, click.gear['multiplier'].cost, 
+        click.gear['multiplier'].quantity), None))
+    
+    def update_bot(self):
+        _translate = QtCore.QCoreApplication.translate
+        ui.pushBot.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['bot'].description, click.gear['bot'].cost, 
+        click.gear['bot'].quantity), None))
+    
+    def update_autom(self):
+        _translate = QtCore.QCoreApplication.translate
+        ui.pushAutom.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['automatron'].description, click.gear['automatron'].cost, 
+        click.gear['automatron'].quantity), None))
+    
+    def update_dread(self):
+        _translate = QtCore.QCoreApplication.translate
+        ui.pushDread.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['dreadnought'].description, click.gear['dreadnought'].cost, 
+        click.gear['dreadnought'].quantity), None))
 
 
 if __name__ == "__main__":
@@ -144,11 +174,16 @@ if __name__ == "__main__":
     win_Title = QtWidgets.QDialog()
     ui = Ui_win_Title()
     ui.setupUi(win_Title)
-    click = Clicker()
+    click = Clicker(Gear)
 
     # ui.pushVote.clicked.connect(ui.blah) - link function to do thang
     ui.pushQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
     ui.pushVote.clicked.connect(click.increment)
+    ui.pushExtinf.clicked.connect(click.update_extra_inf)
+    ui.pushMult.clicked.connect(click.update_multi)
+    ui.pushAutom.clicked.connect(click.update_autom)
+    ui.pushBot.clicked.connect(click.update_bot)
+    ui.pushDread.clicked.connect(click.update_dread)
     
     win_Title.show()
     exit(app.exec_())

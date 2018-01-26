@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>419</width>
-    <height>419</height>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,16 +54,16 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QPushButton" name="pushAutom">
+        <widget class="QPushButton" name="pushBot">
          <property name="text">
-          <string>Vote Automatron:</string>
+          <string>Vote Bot:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushBot">
+        <widget class="QPushButton" name="pushAutom">
          <property name="text">
-          <string>Vote Bot:</string>
+          <string>Vote Automatron:</string>
          </property>
         </widget>
        </item>
