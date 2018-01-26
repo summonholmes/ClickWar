@@ -142,7 +142,7 @@ if __name__ == "__main__":
     win_Title = QtWidgets.QDialog()
     ui = Ui_win_Title()
     ui.setupUi(win_Title)
-    click = Clicker(Gear)
+    click = Clicker()
 
     # ui.pushVote.clicked.connect(ui.blah) - link function to do thang
     ui.pushQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
