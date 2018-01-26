@@ -134,7 +134,9 @@ class Clicker(Ui_win_Title):
                                          'Easy.', 500000, per_second=500000)
 
     def increment(self):
+        _translate = QtCore.QCoreApplication.translate
         self.current_clicks += self.gear['influence'].quantity * 2**self.gear['multiplier'].quantity
+        ui.ClickCount.setText(_translate("win_Title", "%d" % self.current_clicks))
 
 
 if __name__ == "__main__":
@@ -142,11 +144,11 @@ if __name__ == "__main__":
     win_Title = QtWidgets.QDialog()
     ui = Ui_win_Title()
     ui.setupUi(win_Title)
-    click = Clicker(Gear)
+    click = Clicker()
 
     # ui.pushVote.clicked.connect(ui.blah) - link function to do thang
     ui.pushQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
     ui.pushVote.clicked.connect(click.increment)
-
+    
     win_Title.show()
     exit(app.exec_())

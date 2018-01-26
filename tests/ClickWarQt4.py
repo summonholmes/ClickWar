@@ -148,6 +148,7 @@ class Clicker(Ui_win_Title):
         
     def increment(self):
         self.current_clicks += click.gear['influence'].quantity * 2**click.gear['multiplier'].quantity
+        ui.ClickCount.setText(_translate("win_Title", "%d" % self.current_clicks, None))
 
 if __name__ == "__main__":
     app = QtGui.QApplication(argv)
