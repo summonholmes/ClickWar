@@ -122,9 +122,10 @@ class Clicker(Ui_win_Title):
         self.parent = parent
         self.current_clicks = 500
         self.gear = dict()
+        self.gear_assign()
         self.gear_init()
 
-    def gear_init(self):
+    def gear_assign(self):
         self.gear['influence'] = Gear('influence', 'Extra Influence: ',
                                       'Increases number of votes per click.', 10, quantity=1, limit=100)
         self.gear['bot'] = Gear('bot', 'Vote Bot: ',
@@ -135,20 +136,25 @@ class Clicker(Ui_win_Title):
                                         'Beastly bot for annihilating that vote button.', 100, per_second=20)
         self.gear['multiplier'] = Gear('multiplier', 'Influence Multiplier: ',
                                        'Doubles influence.', 50, limit=5)
-        self.gear['inclined plane'] = Gear('inclined plane', 'Roll some clicks your way: ',
+        self.gear['inclined plane'] = Gear('inclined plane', 'Roll Some Clicks Your Way: ',
                                            'Observe clicks in slow motion.',  500, per_second=125)
-        self.gear['pulley'] = Gear('pulley', 'Pull some clicks to you: ',
+        self.gear['pulley'] = Gear('pulley', 'Pull Some Clicks To You: ',
                                    'Not frictionless.', 2000, per_second=750)
-        self.gear['lever'] = Gear('lever', 'Pry some clicks up: ',
+        self.gear['lever'] = Gear('lever', 'Pry Some Clicks Up: ',
                                   'Archimedes would be proud.',  10000, per_second=5000)
-        self.gear['wedge'] = Gear('wedge', 'Stuff some extra clicks in there: ',
+        self.gear['wedge'] = Gear('wedge', 'Stuff Some Extra Clicks In There: ',
                                   'Can I axe you a question?', 100000, per_second=75000)
-        self.gear['elbow greese'] = Gear('elbow greese', 'Click the old-fashioned way: ',
+        self.gear['elbow greese'] = Gear('elbow greese', 'Click the Old Fashioned Way: ',
                                          'Easy.', 500000, per_second=500000)
-        
+    
     def increment(self):
         self.current_clicks += click.gear['influence'].quantity * 2**click.gear['multiplier'].quantity
         ui.ClickCount.setText(_translate("win_Title", "%d" % self.current_clicks, None))
+    
+    def gear_init(self, buttonName, gearName):
+        for gear in self.gear.values():
+            gear.button = ui.Button(parent, text=gear.description % self.gear[gear.name].cost, 
+            command=lambda x=gear.name: self.purchase(x))
     
     def update_extra_inf(self):
         ui.pushExtinf.setText(_translate("win_Title", "%s(%d): %d" % 
@@ -175,25 +181,31 @@ class Clicker(Ui_win_Title):
         (click.gear['dreadnought'].description, click.gear['dreadnought'].cost, 
         click.gear['dreadnought'].quantity), None))
     
-    # def update_gear(self):
-    #     for gear in self.gear.values():
-    #         self.current_clicks += gear.per_second * gear.quantity
-    #     self.current_click_label.config(text='%d' % self.current_clicks)
-    #     self.parent.after(1000, self.update)
+    def update_roll(self):
+        ui.pushRoll.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['inclined plane'].description, click.gear['inclined plane'].cost, 
+        click.gear['inclined plane'].quantity), None))
     
-    # def purchase(self, name):
-    #     if self.current_clicks >= self.gear[name].cost:
-    #         self.gear[name].quantity += 1
-    #         self.current_clicks -= self.gear[name].cost
-    #         self.current_click_label.config(text='%d' % self.current_clicks)
-    #         self.gear[name].button.config(text=self.gear[name].button['text'].split(':')[0] +
-    #                                       ': ({:.1f}): {}'.format(self.gear[name].cost, self.gear[name].quantity))
-    #         self.gear[name].cost *= 1.1  # 10% cost increase after purchasing (should be a baseline and altered based on power.)
-    #         if self.gear[name].limit and self.gear[name].quantity >= self.gear[name].limit:
-    #             self.gear[name].button.config(state=tk.DISABLED)
-    #             self.gear[name].button.config(text=self.gear[name].button['text'].split(':')[0] +
-    #                                           ': (Limit reached!): {}'.format(self.gear[name].quantity))
+    def update_pull(self):
+        ui.pushPull.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['pulley'].description, click.gear['pulley'].cost, 
+        click.gear['pulley'].quantity), None))
+    
+    def update_pry(self):
+        ui.pushPry.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['lever'].description, click.gear['lever'].cost, 
+        click.gear['lever'].quantity), None))
+    
+    def update_stuff(self):
+        ui.pushStuff.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['wedge'].description, click.gear['wedge'].cost, 
+        click.gear['wedge'].quantity), None))
 
+    def update_click(self):
+        ui.pushClick.setText(_translate("win_Title", "%s(%d): %d" % 
+        (click.gear['elbow greese'].description, click.gear['elbow greese'].cost, 
+        click.gear['elbow greese'].quantity), None))
+    
 if __name__ == "__main__":
     app = QtGui.QApplication(argv)
     win_Title = QtGui.QDialog()
@@ -204,11 +216,17 @@ if __name__ == "__main__":
     # ui.pushVote.clicked.connect(ui.blah) - link function to do thang
     ui.pushQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
     ui.pushVote.clicked.connect(click.increment)
-    ui.pushExtinf.clicked.connect(click.update_extra_inf)
+    # ui.pushExtinf.clicked.connect(click.update_extra_inf)
+    ui.pushExtinf.clicked.connect(click.gear_init('pushExtinf', 'multiplier'))
     ui.pushMult.clicked.connect(click.update_multi)
     ui.pushAutom.clicked.connect(click.update_autom)
     ui.pushBot.clicked.connect(click.update_bot)
     ui.pushDread.clicked.connect(click.update_dread)
+    ui.pushRoll.clicked.connect(click.update_roll)
+    ui.pushPull.clicked.connect(click.update_pull)
+    ui.pushPry.clicked.connect(click.update_pry)
+    ui.pushStuff.clicked.connect(click.update_stuff)
+    ui.pushClick.clicked.connect(click.update_click)
     
     win_Title.show()
     exit(app.exec_())

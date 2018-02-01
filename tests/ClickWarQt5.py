@@ -110,80 +110,71 @@ class Clicker(Ui_win_Title):
         self.current_clicks = 500
         self.gear = dict()
         self.gear_init()
+        self.button_init()
 
     def gear_init(self):
-        self.gear['influence'] = Gear('influence', 'Extra influence: ',
+        self.gear['influence'] = Gear('influence', 'Extra Influence: ',
                                       'Increases number of votes per click.', 10, quantity=1, limit=100)
-        self.gear['bot'] = Gear('bot', 'Vote bot: ',
+        self.gear['bot'] = Gear('bot', 'Vote Bot: ',
                                 'Have a bot vote for you; has its own influence.',  15, 0, per_second=1)
-        self.gear['automatron'] = Gear('automatron', 'Vote automatron: ',
+        self.gear['automatron'] = Gear('automatron', 'Vote Automatron: ',
                                        'More powerful bots for smashing that vote button.', 50, per_second=5)
-        self.gear['dreadnought'] = Gear('dreadnought', 'Vote dreadnought: ',
+        self.gear['dreadnought'] = Gear('dreadnought', 'Vote Dreadnought: ',
                                         'Beastly bot for annihilating that vote button.', 100, per_second=20)
-        self.gear['multiplier'] = Gear('multiplier', 'Influence multiplier: ',
+        self.gear['multiplier'] = Gear('multiplier', 'Influence Multiplier: ',
                                        'Doubles influence.', 50, limit=5)
-        self.gear['inclined plane'] = Gear('inclined plane', 'Roll some clicks your way: ',
+        self.gear['inclined plane'] = Gear('inclined plane', 'Roll Some Clicks Your Way: ',
                                            'Observe clicks in slow motion.',  500, per_second=125)
-        self.gear['pulley'] = Gear('pulley', 'Pull some clicks to you: ',
+        self.gear['pulley'] = Gear('pulley', 'Pull Some Clicks To You: ',
                                    'Not frictionless.', 2000, per_second=750)
-        self.gear['lever'] = Gear('lever', 'Pry some clicks up: ',
+        self.gear['lever'] = Gear('lever', 'Pry Some Clicks Up: ',
                                   'Archimedes would be proud.',  10000, per_second=5000)
-        self.gear['wedge'] = Gear('wedge', 'Stuff some extra clicks in there: ',
+        self.gear['wedge'] = Gear('wedge', 'Stuff Some Extra Clicks In There: ',
                                   'Can I axe you a question?', 100000, per_second=75000)
-        self.gear['elbow greese'] = Gear('elbow greese', 'Click the old-fashioned way: ',
+        self.gear['elbow greese'] = Gear('elbow greese', 'Click the Old Fashioned Way: ',
                                          'Easy.', 500000, per_second=500000)
+    
+
+    def button_init(self):
+        _translate = QtCore.QCoreApplication.translate
+        gear_names = [name for name in self.gear]
+        button_names = [ui.pushRoll, ui.pushExtinf, ui.pushDread, 
+        ui.pushClick, ui.pushMult, ui.pushBot, ui.pushStuff, 
+        ui.pushPull, ui.pushPry, ui.pushAutom]
+
+        for i in range(len(gear_names)):
+            button_names[i].setText(_translate("win_Title", "%s(%d): %d" % 
+            (self.gear[gear_names[i]].description, self.gear[gear_names[i]].cost, 
+            self.gear[gear_names[i]].quantity), None))
+
 
     def increment(self):
         _translate = QtCore.QCoreApplication.translate
         self.current_clicks += self.gear['influence'].quantity * 2**self.gear['multiplier'].quantity
         ui.ClickCount.setText(_translate("win_Title", "%d" % self.current_clicks))
-    
-    def update_extra_inf(self):
-        _translate = QtCore.QCoreApplication.translate
-        ui.pushExtinf.setText(_translate("win_Title", "%s(%d): %d" % 
-        (click.gear['influence'].description, click.gear['influence'].cost, 
-        click.gear['influence'].quantity), None))
 
-    def update_multi(self):
-        _translate = QtCore.QCoreApplication.translate
-        ui.pushMult.setText(_translate("win_Title", "%s(%d): %d" % 
-        (click.gear['multiplier'].description, click.gear['multiplier'].cost, 
-        click.gear['multiplier'].quantity), None))
     
-    def update_bot(self):
-        _translate = QtCore.QCoreApplication.translate
-        ui.pushBot.setText(_translate("win_Title", "%s(%d): %d" % 
-        (click.gear['bot'].description, click.gear['bot'].cost, 
-        click.gear['bot'].quantity), None))
-    
-    def update_autom(self):
-        _translate = QtCore.QCoreApplication.translate
-        ui.pushAutom.setText(_translate("win_Title", "%s(%d): %d" % 
-        (click.gear['automatron'].description, click.gear['automatron'].cost, 
-        click.gear['automatron'].quantity), None))
-    
-    def update_dread(self):
-        _translate = QtCore.QCoreApplication.translate
-        ui.pushDread.setText(_translate("win_Title", "%s(%d): %d" % 
-        (click.gear['dreadnought'].description, click.gear['dreadnought'].cost, 
-        click.gear['dreadnought'].quantity), None))
-
-
 if __name__ == "__main__":
     app = QtWidgets.QApplication(argv)
     win_Title = QtWidgets.QDialog()
     ui = Ui_win_Title()
     ui.setupUi(win_Title)
     click = Clicker(Gear)
+    # print(click.gear)
 
     # ui.pushVote.clicked.connect(ui.blah) - link function to do thang
     ui.pushQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
     ui.pushVote.clicked.connect(click.increment)
-    ui.pushExtinf.clicked.connect(click.update_extra_inf)
-    ui.pushMult.clicked.connect(click.update_multi)
-    ui.pushAutom.clicked.connect(click.update_autom)
-    ui.pushBot.clicked.connect(click.update_bot)
-    ui.pushDread.clicked.connect(click.update_dread)
+    # ui.pushExtinf.clicked.connect(click.update_extra_inf)
+    # ui.pushMult.clicked.connect(click.update_multi)
+    # ui.pushAutom.clicked.connect(click.update_autom)
+    # ui.pushBot.clicked.connect(click.update_bot)
+    # ui.pushDread.clicked.connect(click.update_dread)
+    # ui.pushRoll.clicked.connect(click.update_roll)
+    # ui.pushPull.clicked.connect(click.update_pull)
+    # ui.pushPry.clicked.connect(click.update_pry)
+    # ui.pushStuff.clicked.connect(click.update_stuff)
+    # ui.pushClick.clicked.connect(click.update_click)
     
     win_Title.show()
     exit(app.exec_())
