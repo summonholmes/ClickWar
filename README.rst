@@ -8,7 +8,7 @@ Running tests
 
 * Make sure to have Python3_ or later installed
 * Tests require the Tkinter_ toolkit for Python. Python3+ should include Tkinter, but if not check the link provided for install instructions
-* If using the Qt interfaces, the proper PyQt_ version must be installed for Python 3+.  This can be accomplished using your Linux/Unix package manager, grabbing an installer here_, Anaconda, or pip (except PyQt4).
+* If using the Qt interface, the proper PyQt5_ version must be installed for Python 3+.  This can be accomplished using your Linux/Unix package manager, grabbing an installer here_, Anaconda, or pip.
 * The games can be started by runing the following on a command line (windows):
 
 .. code:: bash
