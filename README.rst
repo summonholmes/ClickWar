@@ -30,7 +30,7 @@ Authors
 
 .. _Python3: https://www.python.org/downloads/
 .. _Tkinter: http://www.tkdocs.com/tutorial/install.html
-.. _PyQt: https://www.riverbankcomputing.com/software/pyqt/intro
+.. _PyQt5: https://www.riverbankcomputing.com/software/pyqt/intro
 .. _here: https://sourceforge.net/projects/pyqt/files/
 .. _ehinderer: https://github.com/ehinderer
 .. _summonholmes: https://github.com/summonholmes
