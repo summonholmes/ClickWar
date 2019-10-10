@@ -3,6 +3,8 @@ ClickWar
 
 ClickWar is a clicker game that counts click points toward votes in a competitive multi-player poll.
 
+IDK what this is doing anymore but I want Hacktoberfest commits!
+
 Running tests
 ~~~~~~~~~~~~~
 
